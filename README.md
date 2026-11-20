@@ -1,30 +1,28 @@
 # Rust Industries
 
-A Horizon Android mod focused on industrial machines, processing, resources, and automation.
+Industrial-themed content mod for Horizon Android.
 
-## Current version
+## Active development target
 
-- Version: `0.1.3`
-- Target: Horizon Android
-- Release status: structurally packaged; in-game runtime validation is still pending.
+**0.1.4 test build only.** The 1.0.0 roadmap is not active. Version 0.1.3 remains the baseline and must be preserved unchanged.
 
-## Repository layout
+The 0.1.4 diagnostic package is based on the supplied 0.1.3 HMOD. Its only content change is the manifest version string from `0.1.3` to `0.1.4`; blocks, items, recipes, assets and Creative tab are intentionally unchanged so installation and mod discovery can be isolated.
 
-- `mod/` — unpacked mod data and resource files used for development.
-- `releases/v0.1.3/` — installable HMOD and Android installer ZIP.
+## 0.1.4 test
 
-## Install
+- HMOD: `RustIndustries_0.1.4.hmod`
+- Android install ZIP: `RustIndustries_Android_Install_v0.1.4_TEST.zip`
+- Structural checks: 277 archive entries, 207 JSON files parsed, zero JSON syntax errors, 33 Creative tab entries.
+- Runtime status: **not yet tested in Horizon**.
 
-1. Download `RustIndustries_Android_Install_v0.1.3_FIXED.zip` from `releases/v0.1.3/`.
-2. Extract it.
-3. Import `RustIndustries_0.1.3.hmod` into Horizon, replacing older Rust Industries copies.
+Install only after disabling/removing older Rust Industries copies, then fully restart Horizon. Check the displayed mod version and the Creative tab. If it still shows an older version or content is missing, capture the Mods screen, Creative inventory and Horizon error log.
 
-## Development notes
+## Development rules
 
-The `random_ticks` property was removed from the four crop block definitions because the Horizon error report showed that this property is not accepted by its `BlockProperties` schema.
+- Work only on the `release/0.1.4` branch for this test cycle.
+- Do not alter or overwrite 0.1.3 release files.
+- Do not publish 1.0.0 or add large features during this cycle.
+- Fix only issues that block installation, registration, Creative visibility or basic stability.
+- Do not claim FPS/RAM improvements without measurements on the target Android device.
 
-This repository contains JSON-based mod definitions and assets; it is not a standalone Android application.
-
-## Compatibility
-
-Designed for Horizon Android. Confirm compatibility against the exact Horizon build in-game before distributing a release.
+See [0.1.4 test protocol](docs/TESTING_0.1.4.md).
