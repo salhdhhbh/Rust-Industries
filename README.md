@@ -4,18 +4,21 @@ Industrial-themed content mod for Horizon Android.
 
 ## Active development target
 
-**0.1.4 test build only.** The 1.0.0 roadmap is not active. Version 0.1.3 remains the baseline and must be preserved unchanged.
+**0.1.4 fixed test build only.** The 1.0.0 roadmap is not active. Version 0.1.3 remains the baseline and must be preserved unchanged.
 
-The 0.1.4 diagnostic package is based on the supplied 0.1.3 HMOD. Its only content change is the manifest version string from `0.1.3` to `0.1.4`; blocks, items, recipes, assets and Creative tab are intentionally unchanged so installation and mod discovery can be isolated.
+The first 0.1.4 diagnostic package only changed the manifest version. Horizon's diagnostic log then exposed a registry failure: `rust_industries:crushing_wheel` used `minecraft:chain` as its template, but the running Horizon build did not recognize that template as a block.
 
-## 0.1.4 test
+The corrected 0.1.4 build replaces `minecraft:chain` with `minecraft:oak_log` in six axis-oriented block definitions: crushing wheel, gearbox, large cogwheel, shaft, small cogwheel and water wheel. These blocks already use `axis=x/y/z` model variants, which are provided by the log template. No new gameplay features or mechanical behaviour are added.
 
-- HMOD: `RustIndustries_0.1.4.hmod`
-- Android install ZIP: `RustIndustries_Android_Install_v0.1.4_TEST.zip`
+## 0.1.4 fixed test
+
+- HMOD: `RustIndustries_0.1.4_FIXED.hmod`
+- Android install ZIP: `RustIndustries_Android_Install_v0.1.4_FIXED.zip`
 - Structural checks: 277 archive entries, 207 JSON files parsed, zero JSON syntax errors, 33 Creative tab entries.
-- Runtime status: **not yet tested in Horizon**.
+- Registry correction: six invalid `minecraft:chain` templates replaced with `minecraft:oak_log`.
+- Runtime status: **awaiting re-test in Horizon**. The earlier 0.1.4 build was recognized and enabled, but its content failed registry loading.
 
-Install only after disabling/removing older Rust Industries copies, then fully restart Horizon. Check the displayed mod version and the Creative tab. If it still shows an older version or content is missing, capture the Mods screen, Creative inventory and Horizon error log.
+Install only after disabling/removing older Rust Industries copies, then fully restart Horizon. Check the Mods row for a red load error, then check the Creative tab and search for `Machine Casing`. If content is still missing, export a fresh Horizon diagnostics ZIP.
 
 ## Development rules
 
