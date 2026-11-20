@@ -1,30 +1,44 @@
 # Rust Industries
 
-A Horizon Android mod focused on industrial machines, processing, resources, and automation.
+**Rust Industries** is a lightweight industrial and factory-themed content mod for Horizon Android. Its design goal is practical mechanical automation with a small client and world-performance footprint.
 
-## Current version
+## Project status
 
-- Version: `0.1.3`
-- Target: Horizon Android
-- Release status: structurally packaged; in-game runtime validation is still pending.
+- Current installable build: **0.1.3**
+- Target milestone: **1.0.0**
+- Mod format: Horizon `.hmod`, content API `0.2`
+- Runtime validation: pending on the target Horizon Android build
+- The `release/1.0.0` branch is a development and planning branch, not a published 1.0.0 release.
 
-## Repository layout
+## What is in the current build
 
-- `mod/` — unpacked mod data and resource files used for development.
-- `releases/v0.1.3/` — installable HMOD and Android installer ZIP.
+The 0.1.3 package contains industrial blocks and items, resource crops, models, blockstates, loot tables, language files, and a custom **Rust Industries** Creative tab. The Creative tab is already declared at:
 
-## Install
+`data/rust_industries/horizon/creative_tab/industry.json`
 
-1. Download `RustIndustries_Android_Install_v0.1.3_FIXED.zip` from `releases/v0.1.3/`.
-2. Extract it.
-3. Import `RustIndustries_0.1.3.hmod` into Horizon, replacing older Rust Industries copies.
+If the tab does not appear in-game, investigate mod loading, manifest/API compatibility, and the Horizon log before duplicating the tab definition.
 
-## Development notes
+## Design direction for 1.0.0
 
-The `random_ticks` property was removed from the four crop block definitions because the Horizon error report showed that this property is not accepted by its `BlockProperties` schema.
+- A compact mechanical/factory identity: shafts, cogwheels, gearboxes, motors, belts/transport, processing machines, and simple production chains.
+- Keep Create-like inspiration at the level of readable mechanical systems; do not copy Create's expensive visual simulation.
+- Prefer static or low-state models, shared geometry, simple textures, and vanilla templates where they fit.
+- Avoid always-running block entities, per-tick world scans, particle-heavy effects, animated textures, and large numbers of moving render objects.
+- Separate visual content from actual machine behaviour. Content API 0.2 defines registries and assets; real processing, rotation, item transfer, and machine GUIs need a supported code/runtime implementation. Do not describe decorative blocks as working machines.
 
-This repository contains JSON-based mod definitions and assets; it is not a standalone Android application.
+## Repository structure
 
-## Compatibility
+- `mod/` — source package and development assets.
+- `releases/v0.1.3/` — current installable release files.
+- `docs/` — architecture, performance rules, and 1.0.0 acceptance plan.
 
-Designed for Horizon Android. Confirm compatibility against the exact Horizon build in-game before distributing a release.
+## Install current version
+
+1. Download the Android install ZIP from `releases/v0.1.3/`.
+2. Extract it and import the included `.hmod` into Horizon.
+3. Remove/disable older duplicate Rust Industries copies before testing.
+4. Restart the game and check the Mods list and log if content is missing.
+
+## Validation before a release
+
+A package is not considered released merely because it is a valid ZIP. Each candidate must pass archive/JSON/schema checks and an in-game test on the intended Horizon Android version. See [the 1.0.0 plan](docs/V1_SPEC.md) and [performance rules](docs/PERFORMANCE.md).
