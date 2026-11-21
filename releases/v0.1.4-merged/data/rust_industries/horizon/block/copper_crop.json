@@ -1,0 +1,5 @@
+{
+  "template": "minecraft:wheat",
+  "item": false,
+  "pick_item": "rust_industries:copper_crop"
+}
