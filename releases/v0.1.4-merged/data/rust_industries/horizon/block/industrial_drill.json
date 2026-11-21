@@ -1,0 +1,27 @@
+{
+  "template": "minecraft:iron_block",
+  "state_properties": {
+    "facing": {
+      "type": "enum",
+      "values": ["down", "up", "north", "south", "west", "east"]
+    }
+  },
+  "default_state": {
+    "facing": "south"
+  },
+  "occludes": false,
+  "shapes": {
+    "default": [
+      [0.25, 0.25, 0.125, 0.75, 0.75, 0.8125],
+      [0.375, 0.375, 0.75, 0.625, 0.625, 1.0],
+      [0.3125, 0.3125, 0.875, 0.6875, 0.6875, 1.0]
+    ]
+  },
+  "collision_shapes": {
+    "default": [
+      [0.25, 0.25, 0.125, 0.75, 0.75, 0.8125],
+      [0.375, 0.375, 0.75, 0.625, 0.625, 1.0],
+      [0.3125, 0.3125, 0.875, 0.6875, 0.6875, 1.0]
+    ]
+  }
+}
