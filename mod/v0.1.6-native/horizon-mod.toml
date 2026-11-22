@@ -1,0 +1,13 @@
+id = "rust_industries"
+name = "Rust Industries"
+version = "0.1.6"
+description = "Rust Industries native processors, item transport, industrial storage and dedicated textures."
+authors = ["Rust Industries Project"]
+api = "0.2"
+side = "both"
+capabilities = ["registries"]
+
+[native]
+game = "26.3"
+horizon = "0b14f8acfd97fa2c750e42795249dcc981178ca4"
+mixins = "e59da9094f0c2fdda6c627fe9eff22dec6a906f0"
