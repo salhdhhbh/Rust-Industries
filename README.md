@@ -2,29 +2,33 @@
 
 A Horizon Android mod focused on industrial machines, processing, resources, and automation.
 
-## Current version
+## Current development version
 
-- Version: `0.1.3`
-- Target: Horizon Android
-- Release status: structurally packaged; in-game runtime validation is still pending.
+- Version: `0.1.5`
+- Target: Starling 0.9.0 / Horizon Mod API 0.2
+- Native source: `mod/v0.1.5-native/`
+- Status: source committed; native compilation and in-game validation are still pending.
 
 ## Repository layout
 
-- `mod/` — unpacked mod data and resource files used for development.
-- `releases/v0.1.3/` — installable HMOD and Android installer ZIP.
+- `mod/` — mod source and resource files.
+- `mod/v0.1.5-native/` — Rust Native source for the Crusher.
+- `releases/v0.1.3/` — historical 0.1.3 release files (preserved).
 
-## Install
+## Build 0.1.5 Native
 
-1. Download `RustIndustries_Android_Install_v0.1.3_FIXED.zip` from `releases/v0.1.3/`.
-2. Extract it.
-3. Import `RustIndustries_0.1.3.hmod` into Horizon, replacing older Rust Industries copies.
+Open `mod/v0.1.5-native/` as a Native mod project in Starling/Horizon and run the launcher's Native Build for the target game instance. The Cargo dependency points to the pinned SDK at `.horizon/sdk/api/crates/horizon-mod-api`; the Horizon build tool fetches the SDK when it is missing.
+
+The source adds a two-slot Crusher menu and server-side processing for iron, copper and gold inputs. Each supported input produces two matching dust after 40 ticks.
+
+**Important:** this repository commit contains the Native source files, not a precompiled Android binary. Native compilation is performed by the launcher for the target instance. The source has not yet been compiled or runtime-tested, so do not treat this commit as a verified working build.
+
+## Historical compatibility
+
+Versions 0.1.3 FIXED and 0.1.4 COMPAT5_FIXED are preserved as historical baselines. New machine development continues on 0.1.5.
 
 ## Development notes
 
 The `random_ticks` property was removed from the four crop block definitions because the Horizon error report showed that this property is not accepted by its `BlockProperties` schema.
 
-This repository contains JSON-based mod definitions and assets; it is not a standalone Android application.
-
-## Compatibility
-
-Designed for Horizon Android. Confirm compatibility against the exact Horizon build in-game before distributing a release.
+This repository contains mod definitions and assets; it is not a standalone Android application.
