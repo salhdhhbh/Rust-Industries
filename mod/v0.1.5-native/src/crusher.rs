@@ -224,7 +224,7 @@ mod tests {
             energy_per_tick: ENERGY_PER_TICK,
         };
 
-        for _ in 0..PROCESS_TICKS - 1 {
+        for _ in 0..(PROCESS_TICKS - 1) {
             assert_eq!(
                 advance(&mut buffer, &mut progress, operation, true, true),
                 TickResult::Working
