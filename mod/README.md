@@ -1,7 +1,8 @@
 # Mod source directory
 
-This directory is reserved for the unpacked Rust Industries Horizon mod source.
+This directory holds versioned Rust Industries Native source snapshots.
 
-Keep development files here, grouped by their actual namespaces and asset paths. Installable release packages belong in `releases/v0.1.3/`.
+- `v0.1.5-native/` — existing 0.1.5 Native source; preserved.
+- `v0.1.8-native/` — 0.1.8 Rust source and Native build metadata.
 
-Do not place an empty placeholder file named `Mod` in the repository root; GitHub creates folders from files committed inside them.
+Keep source snapshots versioned. Do not overwrite historical version directories when adding new releases. Complete HMOD packages and their release notes belong under the matching `releases/vX.Y.Z/` directory.
