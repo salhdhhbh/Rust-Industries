@@ -69,6 +69,15 @@ impl EnergyBuffer {
         extracted
     }
 
+    /// Generate energy internally, up to the remaining capacity. This is
+    /// independent of external insertion limits because generators are sources,
+    /// not capability clients.
+    pub fn generate(&mut self, amount: i32) -> i32 {
+        let accepted = self.space().min(amount).max(0);
+        self.stored += accepted;
+        accepted
+    }
+
     /// Spend energy internally. Internal machine use is not limited by the
     /// external extraction rate; it only requires enough stored FE.
     pub fn consume(&mut self, amount: i32) -> bool {
@@ -171,6 +180,16 @@ mod tests {
         assert_eq!(buffer.insert(-5), 0);
         assert_eq!(buffer.extract(-5), 0);
         assert_eq!(buffer.stored(), 50);
+    }
+
+    #[test]
+    fn generator_fills_only_available_capacity() {
+        let mut buffer = EnergyBuffer::new(90, 100, 0, 20);
+        assert_eq!(buffer.generate(50), 10);
+        assert_eq!(buffer.stored(), 100);
+        assert_eq!(buffer.generate(50), 0);
+        assert_eq!(buffer.stored(), 100);
+        assert_eq!(buffer.generate(-5), 0);
     }
 
     #[test]
