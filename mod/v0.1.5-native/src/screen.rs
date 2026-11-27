@@ -45,6 +45,15 @@ pub fn crusher_draw(host: &dyn ClientHost, event: &mut ScreenDrawEvent<'_>) {
     let percent = (fraction * 100.0).round() as i32;
     draw.text(&format!("{percent}%"), [ox + 80.0, oy + 101.0], OPAQUE | 0xE8E8E8, true);
 
+    let capacity = event.data.get(4).copied().unwrap_or(20_000).max(1);
+    let stored = event.data.get(3).copied().unwrap_or(0).clamp(0, capacity);
+    draw.text(
+        &format!("FE {stored}/{capacity}"),
+        [ox + 88.0, oy + 73.0],
+        OPAQUE | 0x79C9F5,
+        true,
+    );
+
     let (key, fallback, colour) = match status {
         1 => ("rust_industries.gui.crushing", "CRUSHING", 0x65D98B),
         2 => ("rust_industries.gui.output_full", "OUTPUT FULL", 0xF0B45B),
