@@ -64,3 +64,61 @@ pub fn crusher_draw(host: &dyn ClientHost, event: &mut ScreenDrawEvent<'_>) {
     let line = lang(host, key, fallback);
     draw.text(&line, [ox + 112.0, oy + 8.0], OPAQUE | colour, true);
 }
+
+
+/// A compact one-slot GUI for the coal-powered generator.
+pub fn generator_screen() -> Screen {
+    Screen {
+        width: 176.0,
+        height: 194.0,
+        slots: vec![Some([80.0, 43.0])],
+        inventory_y: 112.0,
+        inventory_x: 8.0,
+        own_labels: true,
+        own_background: true,
+        ..Screen::default()
+    }
+}
+
+pub fn generator_draw(host: &dyn ClientHost, event: &mut ScreenDrawEvent<'_>) {
+    let [ox, oy] = event.origin;
+    let draw = &mut *event.draw;
+    draw.sprite(GUI, [0.0, 0.0, 176.0, 194.0], [ox, oy, 176.0, 194.0], None);
+
+    let title = lang(host, "container.rust_industries.coal_generator", "Coal Generator");
+    draw.text(&title, [ox + 8.0, oy + 6.0], OPAQUE | 0xE0E0E0, false);
+    let fuel_label = lang(host, "rust_industries.gui.fuel", "FUEL");
+    draw.text(&fuel_label, [ox + 76.0, oy + 31.0], OPAQUE | 0xC5C5C5, true);
+
+    let burn = event.data.first().copied().unwrap_or(0).max(0);
+    let burn_max = event.data.get(1).copied().unwrap_or(1).max(1);
+    let energy = event.data.get(2).copied().unwrap_or(0).max(0);
+    let capacity = event.data.get(3).copied().unwrap_or(20_000).max(1);
+    let status = event.data.get(4).copied().unwrap_or(0);
+
+    let burn_fraction = (burn as f32 / burn_max as f32).clamp(0.0, 1.0);
+    let burn_width = 120.0 * burn_fraction;
+    if burn_width > 0.0 {
+        draw.sprite(
+            GUI,
+            [0.0, 194.0, 120.0, 8.0],
+            [ox + 28.0, oy + 78.0, burn_width, 8.0],
+            None,
+        );
+    }
+
+    draw.text(
+        &format!("FE {energy}/{capacity}"),
+        [ox + 88.0, oy + 94.0],
+        OPAQUE | 0x79C9F5,
+        true,
+    );
+
+    let (key, fallback, colour) = match status {
+        1 => ("rust_industries.gui.generating", "GENERATING", 0x65D98B),
+        2 => ("rust_industries.gui.buffer_full", "BUFFER FULL", 0xF0B45B),
+        _ => ("rust_industries.gui.idle", "IDLE", 0xB7B7B7),
+    };
+    let line = lang(host, key, fallback);
+    draw.text(&line, [ox + 112.0, oy + 8.0], OPAQUE | colour, true);
+}
