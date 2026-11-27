@@ -1,34 +1,47 @@
 # Rust Industries
 
-A Horizon Android mod focused on industrial machines, processing, resources, and automation.
+Industrial machines, processing, crops, and energy infrastructure for Horizon / Starling on Android.
 
 ## Current development version
 
-- Version: `0.1.5`
-- Target: Starling 0.9.0 / Horizon Mod API 0.2
-- Native source: `mod/v0.1.5-native/`
-- Status: source committed; native compilation and in-game validation are still pending.
+- Version: `0.1.8` — Native energy-network preview
+- Mod ID: `rust_industries`
+- Declared game: `26.3`
+- Declared Horizon Mod API: `0.2`
+- Native source snapshot: [`mod/v0.1.8-native/`](mod/v0.1.8-native/)
+- Package notes and validation: [`releases/v0.1.8/README.md`](releases/v0.1.8/README.md)
 
-## Repository layout
+Version 0.1.8 adds FE generation, storage, and cable transfer while retaining the mechanical content included in the supplied package. It is an experimental Native package, not a runtime-verified release.
 
-- `mod/` — mod source and resource files.
-- `mod/v0.1.5-native/` — Rust Native source for the Crusher.
-- `releases/v0.1.3/` — historical 0.1.3 release files (preserved).
+## 0.1.8 additions
 
-## Build 0.1.5 Native
+- Coal Generator: 20,000 FE capacity; 50 FE generated per active fuel tick.
+- Basic Energy Cube: 4,000,000 FE bidirectional storage.
+- Basic Universal Cable: 8,000 FE buffer and neighbour capability transfer.
+- Crushing Wheel: 20,000 FE internal storage and 50 FE per processing tick; a 40-tick cycle consumes 2,000 FE.
+- The 0.1.8 package includes the mechanical machines, Depot, crop families, mechanical components, assets, and data definitions described in its Persian guide.
 
-Open `mod/v0.1.5-native/` as a Native mod project in Starling/Horizon and run the launcher's Native Build for the target game instance. The Cargo dependency points to the pinned SDK at `.horizon/sdk/api/crates/horizon-mod-api`; the Horizon build tool fetches the SDK when it is missing.
+Fuel durations and known limitations are documented in [`releases/v0.1.8/README.md`](releases/v0.1.8/README.md).
 
-The source adds a two-slot Crusher menu and server-side processing for iron, copper and gold inputs. Each supported input produces two matching dust after 40 ticks.
+## Native Build compatibility notes
 
-**Important:** this repository commit contains the Native source files, not a precompiled Android binary. Native compilation is performed by the launcher for the target instance. The source has not yet been compiled or runtime-tested, so do not treat this commit as a verified working build.
+The package manifest declares only string-valued fields under `[native]`; it does not contain nested `[native.mixin]`, `[native.bridge]`, or `[native.module]` tables. Its Cargo manifest has no build script, build dependencies, custom features, or third-party crates; its only dependency is the Horizon Mod API path used by the package.
 
-## Historical compatibility
+Those properties appear to satisfy the published basic eligibility checks for Starling's per-mod Native Build route. This is a static source inspection only: it is not proof that the remote build service will accept or successfully compile this version. If the launcher requests the whole-game Compile route, use the exact error returned by Starling rather than changing the manifest blindly.
 
-Versions 0.1.3 FIXED and 0.1.4 COMPAT5_FIXED are preserved as historical baselines. New machine development continues on 0.1.5.
+The phone does not compile the Rust code locally. Starling sends the mod to its configured build service, and the resulting native library is returned by that service.
 
-## Development notes
+## Validation status
 
-The `random_ticks` property was removed from the four crop block definitions because the Horizon error report showed that this property is not accepted by its `BlockProperties` schema.
+The supplied HMOD archive was inspected as a ZIP-based package:
+- 338 entries; 183,166 bytes uncompressed.
+- 243 JSON files parsed successfully.
+- `Cargo.toml` and `horizon-mod.toml` parsed successfully.
+- No absolute paths, path traversal entries, backslashes, or symlink entries were found.
+- SHA-256: `b04d0ed41d1ef3856fa60c9ab5a32b3edd0006e71e03df6841ee8f4cbb4db898`.
 
-This repository contains mod definitions and assets; it is not a standalone Android application.
+Rust compilation and in-game validation have not yet been completed. Structural validation must not be treated as a successful Native Build.
+
+## Historical versions
+
+The existing 0.1.3 release and 0.1.5 Native source remain in their original paths. New work is kept in the versioned `v0.1.8-native` directory; no historical source snapshot is overwritten.
