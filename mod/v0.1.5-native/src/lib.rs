@@ -88,6 +88,10 @@ impl mod_api::Hooks for RustIndustries {
 
         let block = registrar.block_key(CRUSHING_WHEEL);
         registrar.block_container(&block, crusher_container());
+
+        // The Crusher accepts FE from all six faces and never exposes energy extraction.
+        registrar.block_energy(&block, crusher::energy_battery());
+
         registrar.menu_part(CRUSHER_MENU, CrusherSlotRules);
 
         for id in [
