@@ -1,0 +1,17 @@
+{
+  "container.rust_industries.crusher":"خردکن",
+  "rust_industries.gui.input":"ورودی",
+  "rust_industries.gui.output":"خروجی",
+  "rust_industries.gui.idle":"آماده‌به‌کار",
+  "rust_industries.gui.crushing":"در حال خردکردن",
+  "rust_industries.gui.output_full":"خانه خروجی پر است",
+  "rust_industries.gui.invalid_input":"ماده نامعتبر",
+  "block.rust_industries.coal_generator":"مولد زغالی",
+  "block.rust_industries.basic_energy_cube":"مکعب ذخیره انرژی",
+  "block.rust_industries.basic_universal_cable":"کابل انتقال انرژی",
+  "container.rust_industries.coal_generator":"مولد زغالی",
+  "rust_industries.gui.fuel":"سوخت",
+  "rust_industries.gui.generating":"در حال تولید انرژی",
+  "rust_industries.gui.buffer_full":"مخزن انرژی پر است",
+  "rust_industries.gui.no_energy":"انرژی کافی نیست"
+}

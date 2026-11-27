@@ -1,0 +1,1 @@
+{"type":"minecraft:crafting_shaped","category":"misc","pattern":["IRI","RFR","ICI"],"key":{"I":{"item":"minecraft:iron_ingot"},"R":{"item":"minecraft:redstone"},"F":{"item":"minecraft:furnace"},"C":{"item":"rust_industries:copper_coil"}},"result":{"id":"rust_industries:coal_generator","count":1}}
