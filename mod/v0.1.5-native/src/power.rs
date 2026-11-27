@@ -316,3 +316,50 @@ impl BlockEntityPart for UniversalCablePart {
         }
     }
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::{
+        CABLE_CAPACITY, CABLE_TRANSFER_RATE, ENERGY_CUBE_CAPACITY,
+        ENERGY_CUBE_TRANSFER_RATE, GENERATOR_CAPACITY, GENERATOR_OUTPUT_PER_TICK,
+        fuel_ticks,
+    };
+    use crate::energy::EnergyBuffer;
+
+    #[test]
+    fn generator_accepts_only_the_declared_fuels() {
+        assert_eq!(fuel_ticks("minecraft:coal"), Some(1_600));
+        assert_eq!(fuel_ticks("minecraft:charcoal"), Some(1_600));
+        assert_eq!(fuel_ticks("minecraft:coal_block"), Some(16_000));
+        assert_eq!(fuel_ticks("minecraft:blaze_rod"), Some(2_400));
+        assert_eq!(fuel_ticks("minecraft:dirt"), None);
+    }
+
+    #[test]
+    fn one_coal_burn_tick_generates_fifty_fe() {
+        let mut buffer = EnergyBuffer::new(0, GENERATOR_CAPACITY, 0, 1_000);
+        assert_eq!(buffer.generate(GENERATOR_OUTPUT_PER_TICK), 50);
+        assert_eq!(buffer.stored(), 50);
+    }
+
+    #[test]
+    fn generator_does_not_overfill_its_buffer() {
+        let mut buffer = EnergyBuffer::new(
+            GENERATOR_CAPACITY - 12,
+            GENERATOR_CAPACITY,
+            0,
+            1_000,
+        );
+        assert_eq!(buffer.generate(GENERATOR_OUTPUT_PER_TICK), 12);
+        assert_eq!(buffer.stored(), GENERATOR_CAPACITY);
+    }
+
+    #[test]
+    fn cube_and_cable_use_the_reference_transfer_limits() {
+        assert_eq!(ENERGY_CUBE_CAPACITY, 4_000_000);
+        assert_eq!(ENERGY_CUBE_TRANSFER_RATE, 4_000);
+        assert_eq!(CABLE_CAPACITY, 8_000);
+        assert_eq!(CABLE_TRANSFER_RATE, 8_000);
+    }
+}
