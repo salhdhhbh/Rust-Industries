@@ -1,7 +1,7 @@
 id = "rust_industries"
 name = "Rust Industries"
 version = "0.1.5"
-description = "Rust Industries machines with a native Crusher menu and processing logic."
+description = "Rust Industries native Crusher, coal generator, energy storage and cable network."
 authors = ["Rust Industries Project"]
 api = "0.2"
 side = "both"
