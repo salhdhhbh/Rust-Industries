@@ -3,6 +3,7 @@
 
 mod crusher;
 mod screen;
+mod power;
 
 /// Mekanism-inspired energy storage and machine-cycle primitives.
 pub mod energy;
@@ -72,6 +73,21 @@ impl MenuPart for CrusherSlotRules {
     }
 }
 
+struct GeneratorSlotRules;
+
+#[mod_api::horizon_part]
+impl MenuPart for GeneratorSlotRules {
+    fn menu_slot_rules(&self, host: &dyn Host, event: &mut MenuSlotRulesEvent<'_>) {
+        if event.container != MenuContainer::Main
+            || event.menu != power::COAL_GENERATOR_MENU
+        {
+            return;
+        }
+        let id = event.stack.item().id(host);
+        event.may_place = event.slot == 0 && power::fuel_ticks(&id).is_some();
+    }
+}
+
 #[derive(Default)]
 struct RustIndustries;
 
@@ -101,5 +117,38 @@ impl mod_api::Hooks for RustIndustries {
         ] {
             let _ = registrar.item_key(id);
         }
+
+        // Coal Generator: a fuel-powered FE source with a persistent buffer.
+        let generator = registrar.block_key(power::COAL_GENERATOR);
+        registrar.block_container(&generator, power::generator_container());
+        registrar.block_energy(&generator, power::generator_battery());
+        let generator_kind = registrar
+            .block_entity_type(power::COAL_GENERATOR_PATH)
+            .blocks(&[power::COAL_GENERATOR_PATH])
+            .build();
+        registrar
+            .block_entity_part(&generator_kind, power::CoalGeneratorPart)
+            .expect("Rust Industries: Coal Generator registration");
+        registrar.menu_part(power::COAL_GENERATOR_MENU, GeneratorSlotRules);
+
+        // Energy Cube: large bidirectional storage, with no autonomous ticker.
+        let cube = registrar.block_key(power::BASIC_ENERGY_CUBE);
+        registrar.block_energy(&cube, power::cube_battery());
+        registrar
+            .block_entity_type(power::BASIC_ENERGY_CUBE_PATH)
+            .blocks(&[power::BASIC_ENERGY_CUBE_PATH])
+            .build();
+
+        // Universal Cable: a ticked buffer that pulls from and pushes to adjacent
+        // Horizon energy capabilities.
+        let cable = registrar.block_key(power::BASIC_UNIVERSAL_CABLE);
+        registrar.block_energy(&cable, power::cable_battery());
+        let cable_kind = registrar
+            .block_entity_type(power::BASIC_UNIVERSAL_CABLE_PATH)
+            .blocks(&[power::BASIC_UNIVERSAL_CABLE_PATH])
+            .build();
+        registrar
+            .block_entity_part(&cable_kind, power::UniversalCablePart)
+            .expect("Rust Industries: Universal Cable registration");
     }
 }
