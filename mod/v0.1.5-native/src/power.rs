@@ -7,8 +7,9 @@ use crate::energy::EnergyBuffer;
 use crate::screen;
 use mod_api::{
     BlockEntityPart, BlockEntityTickEvent, BlockEntityTickReply, BlockEntityTicksEvent,
-    BlockPart, Capability, Compound, Direction, ENERGY, EnergyHandler, Host, ItemStack,
-    ModContainer, ModEnergyBuffer, Screen, ScreenDrawEvent, ScreenEvent, ServerHost, Tag,
+    BlockPart, Capability, Compound, Direction, ENERGY, EnergyHandler, Host,
+    HostTransaction, ModContainer, ModEnergyBuffer, Screen, ScreenDrawEvent, ScreenEvent,
+    ServerHost, Tag, Transaction,
 };
 
 pub const COAL_GENERATOR: &str = "rust_industries:coal_generator";
@@ -155,7 +156,8 @@ pub fn tick_generator(host: &mut dyn ServerHost, event: &mut BlockEntityTickEven
     // item resumes burning when downstream machines draw energy again.
     if energy < GENERATOR_CAPACITY && burn_remaining == 0 {
         if let Some(fuel) = event.entity.items[0].clone() {
-            let fuel_id = fuel.item().id(&*host);
+            let host_view: &dyn Host = host;
+            let fuel_id = fuel.item().id(host_view);
             if let Some(duration) = fuel_ticks(&fuel_id) {
                 event.entity.items[0] = fuel.shrink(1);
                 burn_remaining = duration;
