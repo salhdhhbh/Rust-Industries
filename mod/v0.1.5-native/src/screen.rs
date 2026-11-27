@@ -3,6 +3,7 @@
 use mod_api::{ClientHost, Screen, ScreenDrawEvent};
 
 const GUI: &str = "rust_industries:gui/crusher";
+const GENERATOR_GUI: &str = "rust_industries:gui/coal_generator";
 const OPAQUE: u32 = 0xFF00_0000;
 
 fn lang(host: &dyn ClientHost, key: &str, fallback: &str) -> String {
@@ -83,7 +84,7 @@ pub fn generator_screen() -> Screen {
 pub fn generator_draw(host: &dyn ClientHost, event: &mut ScreenDrawEvent<'_>) {
     let [ox, oy] = event.origin;
     let draw = &mut *event.draw;
-    draw.sprite(GUI, [0.0, 0.0, 176.0, 194.0], [ox, oy, 176.0, 194.0], None);
+    draw.sprite(GENERATOR_GUI, [0.0, 0.0, 176.0, 194.0], [ox, oy, 176.0, 194.0], None);
 
     let title = lang(host, "container.rust_industries.coal_generator", "Coal Generator");
     draw.text(&title, [ox + 8.0, oy + 6.0], OPAQUE | 0xE0E0E0, false);
@@ -102,15 +103,22 @@ pub fn generator_draw(host: &dyn ClientHost, event: &mut ScreenDrawEvent<'_>) {
         draw.sprite(
             GUI,
             [0.0, 194.0, 120.0, 8.0],
-            [ox + 28.0, oy + 78.0, burn_width, 8.0],
+            [ox + 28.0, oy + 88.0, burn_width, 8.0],
             None,
         );
     }
 
     draw.text(
         &format!("FE {energy}/{capacity}"),
-        [ox + 88.0, oy + 94.0],
+        [ox + 88.0, oy + 73.0],
         OPAQUE | 0x79C9F5,
+        true,
+    );
+    let burn_percent = (burn_fraction * 100.0).round() as i32;
+    draw.text(
+        &format!("{burn_percent}%"),
+        [ox + 80.0, oy + 101.0],
+        OPAQUE | 0xE8E8E8,
         true,
     );
 
