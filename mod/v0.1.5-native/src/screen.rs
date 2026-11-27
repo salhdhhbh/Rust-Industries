@@ -49,6 +49,7 @@ pub fn crusher_draw(host: &dyn ClientHost, event: &mut ScreenDrawEvent<'_>) {
         1 => ("rust_industries.gui.crushing", "CRUSHING", 0x65D98B),
         2 => ("rust_industries.gui.output_full", "OUTPUT FULL", 0xF0B45B),
         3 => ("rust_industries.gui.invalid_input", "INVALID INPUT", 0xF07878),
+        4 => ("rust_industries.gui.no_energy", "NO POWER", 0xF07878),
         _ => ("rust_industries.gui.idle", "IDLE", 0xB7B7B7),
     };
     let line = lang(host, key, fallback);
