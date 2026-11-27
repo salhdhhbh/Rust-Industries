@@ -66,7 +66,8 @@ fn set_i(nbt: &mut Compound, key: &str, value: i32) {
 }
 
 fn publish(event: &mut BlockEntityTickEvent<'_>, progress: i32, status: i32) -> bool {
-    let data = vec![progress, PROCESS_TICKS, status];
+    let energy = get_i(&event.entity.nbt, ENERGY_KEY, 0).clamp(0, ENERGY_CAPACITY);
+    let data = vec![progress, PROCESS_TICKS, status, energy, ENERGY_CAPACITY];
     if event.entity.data == data {
         false
     } else {
