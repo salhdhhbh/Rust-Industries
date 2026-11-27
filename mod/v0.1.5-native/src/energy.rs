@@ -1,8 +1,8 @@
 //! Mekanism-inspired energy and machine-cycle primitives for Rust Industries.
 //!
 //! This module is deliberately independent of Horizon's host API. It models
-//! buffer limits and one machine operation tick; the block-entity adapter can
-//! be added separately and tested against these deterministic rules.
+//! buffer limits, internal generation and one machine operation tick. The
+//! Horizon adapters live in `crate::crusher` and `crate::power`.
 
 /// A bounded energy buffer. Values are measured in FE.
 #[derive(Clone, Copy, Debug, PartialEq, Eq)]
