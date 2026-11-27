@@ -4,6 +4,9 @@
 mod crusher;
 mod screen;
 
+/// Mekanism-inspired energy storage and machine-cycle primitives.
+pub mod energy;
+
 use mod_api::{
     self, BlockEntityPart, BlockEntityTickEvent, BlockEntityTicksEvent, BlockPart, ClientHost,
     Host, MenuContainer, MenuPart, MenuSlotRulesEvent, ModContainer, Registrar,
