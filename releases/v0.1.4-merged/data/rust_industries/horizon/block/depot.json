@@ -1,0 +1,10 @@
+{
+  "template": "minecraft:iron_block",
+  "occludes": false,
+  "shapes": {
+    "default": [[0, 0, 0, 1, 0.1875, 1]]
+  },
+  "collision_shapes": {
+    "default": [[0, 0, 0, 1, 0.1875, 1]]
+  }
+}
